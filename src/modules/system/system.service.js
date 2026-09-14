@@ -77,8 +77,5 @@ export default {
     return formatMemory(raw);
   },
 
-  getUptimeInfo: async () => {
-    const raw = await getDeviceUptime();
-    return formatUptime(raw);
-  }
+  getUptimeInfo: async () => getUptimeSafe(),
 }
