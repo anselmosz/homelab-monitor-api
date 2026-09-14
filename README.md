@@ -4,7 +4,7 @@
 ![GitHub repo size](https://img.shields.io/github/repo-size/anselmosz/homelab-monitor-api)
 
 ![Node.js](https://img.shields.io/badge/node-%3E%3D18-green)
-![Express](https://img.shields.io/badge/express-4.x-blue)
+![Express](https://img.shields.io/badge/express-5.x-blue)
 ---
 
 ## Sumário
@@ -39,6 +39,10 @@ Atualmente a aplicação possui os seguintes recursos implementados:
 * Leitura de uso de armazenamento (total, usado, disponível, percentual)
 * Leitura de tempo de atividade do dispositivo (uptime)
 
+### Services
+
+* Validação do status e atividade do SSH no Termux
+
 ---
 
 ## Arquitetura do projeto
@@ -50,7 +54,7 @@ Controller
 ↓
 Service
 ↓
-Fonte de dados (leitura de arquivo /proc ou invocação de comando externo)
+Fonte de dados (leitura de arquivo `/proc` ou invocação de comando externo)
 ```
 
 ### Responsabilidade de cada camada
@@ -61,12 +65,13 @@ Fonte de dados (leitura de arquivo /proc ou invocação de comando externo)
 * Retornam respostas
 
 **Services**
+
 * Contém a lógica do domínio
 * Realiza a execução de comandos no shell do computador
 
-### Estrutura de módulos
+### Estrutura usada no projeto
 
-O sistema é organizado em módulos baseados em domínios da aplicação.
+O sistema é organizado em módulos baseados em domínios com responsabilidade isoladas na aplicação.
 
 ```
 src
@@ -81,19 +86,19 @@ src
 
 ### Responsabilidade de cada domínio
 
-#### system
+#### System
 
 Responsável por:
 
 * Ler `/proc/meminfo` e `/proc/uptime`, converter valores brutos (segundos, KB) em algo legível (dias/horas, GB)
 
-#### services
+#### Services
 
 Responsável por:
 
 * Verificar se processos como `sshd` estão rodando, e futuramente se a própria API responde
 
-#### network
+#### Network
 
 Responsável por:
 
@@ -102,6 +107,10 @@ Responsável por:
 ---
 
 ## Tecnologias utilizadas
+
+#### Linguagens
+
+* Javascript
 
 #### Backend
 
@@ -144,7 +153,7 @@ Para executar este projeto é necessário que seu PC tenha os seguintes recursos
 - Node.js >= 18
 - npm
 
-### 1 Clonar o repositório e instalar dependências
+### 1.) Clonar o repositório e instalar dependências
 
 ```bash
 git clone https://github.com/anselmosz/homelab-monitor-api
@@ -154,9 +163,14 @@ cd homelab-monitor-api
 npm install
 ```
 
-### 2 Configurar variáveis de ambiente
+### 2.) Configurar variáveis de ambiente
 
-Antes de executar o projeto, configure um arquivo `.env.development`.
+Antes de executar o projeto, crie um arquivo `.env.development` e o edite.
+
+```bash
+touch .env.development
+nano .env.development
+```
 
 Esse arquivo é utilizado pela aplicação Node.js para configurar o ambiente de desenvolvimento, ex:
 
@@ -170,21 +184,21 @@ STORAGE_PATH=/data
 | Variável         | Descrição                                                    |
 | ---------------- | ------------------------------------------------------------ |
 | PORT             | Porta onde a aplicação estará rodando                        |
-| NODE_ENV         | Tipo de ambiente que estará sendo rodado                     |
+| NODE_ENV         | Tipo de ambiente que estará sendo executado                   |
 | STORAGE_PATH     | Caminho para o disco que seus sistema usa como armazenamento |
 
-#### Executar o projeto chamando o arquivo `.env.development`
+#### Executar o projeto chamando o arquivo `.env.development`:
 
-```
+```bash
 npm run dev
 ```
 
 ### Problemas comuns
 
-#### ! Erro de diretório não encontrado ao executar o endpoint GET/system/storage
+#### Erro de diretório não encontrado ao executar o endpoint GET/system/storage
 
 Verifique se o valor de `STORAGE_PATH` está correto e apontando para o local que sua distro usa como armazenamento.
 
-#### ! Campo `available: false` no retorno de /system/uptime
+#### Campo `available: false` no retorno de /system/uptime
 
 Algumas versões do Android restringem, via SELinux, a leitura de `/proc/uptime` por apps sem privilégios elevados (como o Termux). Quando isso ocorre, o endpoint retorna `available: false` em vez de falhar — não há solução sem acesso root ao dispositivo.
