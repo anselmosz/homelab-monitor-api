@@ -30,11 +30,18 @@ function formatMemory(raw) {
   }
 }
 
-// ---------- Tempo em execução ----------
-async function readRawUptime() { /* Realiza a leitura do tempo de atividade do sistema desde a inicialização do dispositivo */
-  const content = await readFile('/proc/uptime', 'utf-8');
-  const [uptimeSeconds] = content.trim().split(' ');
-  return parseFloat(uptimeSeconds);
+// ---------- Uptime ----------
+async function getDeviceUptime() {
+  try {
+    const content = await readFile('/proc/uptime', 'utf-8');
+    const [uptimeSeconds] = content.trim().split(' ');
+    return { available: true, ...formatUptime(parseFloat(uptimeSeconds)) };
+  } catch (error) {
+    if (error.code === 'EACCES') {
+      return { available: false, reason: 'Acesso restrito pelo sistema Android' };
+    }
+    throw error;
+  }
 }
 
 function formatUptime(totalSeconds) { /* faz a conversão do tempo em segundos para dias, horas e minutos */
@@ -56,7 +63,7 @@ export default {
   },
 
   getUptimeInfo: async () => {
-    const raw = await readRawUptime();
+    const raw = await getDeviceUptime();
     return formatUptime(raw);
   }
 }
