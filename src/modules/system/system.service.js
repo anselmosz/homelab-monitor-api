@@ -31,28 +31,43 @@ function formatMemory(raw) {
 }
 
 // ---------- Uptime ----------
-async function getDeviceUptime() {
-  try {
-    const content = await readFile('/proc/uptime', 'utf-8');
-    const [uptimeSeconds] = content.trim().split(' ');
-    return { available: true, ...formatUptime(parseFloat(uptimeSeconds)) };
-  } catch (error) {
-    if (error.code === 'EACCES') {
-      return { available: false, reason: 'Acesso restrito pelo sistema Android' };
-    }
-    throw error;
-  }
+async function readRawUptime() {
+  const content = await readFile('/proc/uptime', 'utf-8');
+  const [uptimeSeconds] = content.trim().split(' ');
+  return parseFloat(uptimeSeconds);
 }
 
-function formatUptime(totalSeconds) { /* faz a conversão do tempo em segundos para dias, horas e minutos */
+function formatUptime(totalSeconds) {
   const days = Math.floor(totalSeconds / 86400);
   const hours = Math.floor((totalSeconds % 86400) / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
 
   return {
+    available: true,
     totalSeconds: Math.floor(totalSeconds),
     formatted: `${days}d ${hours}h ${minutes}m`,
   };
+}
+
+function formatUptimeUnavailable(reason) {
+  return {
+    available: false,
+    totalSeconds: null,
+    formatted: null,
+    reason,
+  };
+}
+
+async function getUptimeSafe() {
+  try {
+    const raw = await readRawUptime();
+    return formatUptime(raw);
+  } catch (error) {
+    if (error.code === 'EACCES') {
+      return formatUptimeUnavailable('Acesso negado pelo sistema ao ler /proc/uptime — restrição comum em versões recentes do Android');
+    }
+    throw error; // qualquer outro erro (arquivo não existe, etc.) continua sendo um erro real
+  }
 }
 
 // Export dos métodos públicos do módulo system
