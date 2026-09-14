@@ -1,18 +1,24 @@
 {
   "name": "homelab-monitor-api",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.1.0",
+  "description": "API de coleta e exposição de métricas do homelab rodando em Termux (SSH, banco de dados, uso de recursos do sistema).",
   "license": "ISC",
-  "author": "",
+  "author": "anselmosz",
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node server.js",
+    "dev": "NODE_ENV=development node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   },
   "dependencies": {
-    "better-sqlite3": "13.0.3",
-    "cors": "2.8.6",
-    "dotenv": "17.4.2",
-    "express": "5.2.1"
-  }
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {},
+  "private": true
 }
