@@ -178,3 +178,7 @@ npm run dev
 #### ! Erro de diretório não encontrado ao executar o endpoint GET/system/storage
 
 Verifique se o valor de `STORAGE_PATH` está correto e apontando para o local que sua distro usa como armazenamento.
+
+#### ! Campo `available: false` no retorno de /system/uptime
+
+Algumas versões do Android restringem, via SELinux, a leitura de `/proc/uptime` por apps sem privilégios elevados (como o Termux). Quando isso ocorre, o endpoint retorna `available: false` em vez de falhar — não há solução sem acesso root ao dispositivo.
