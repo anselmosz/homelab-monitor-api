@@ -138,12 +138,14 @@ Para executar este projeto é necessário que seu PC tenha os seguintes recursos
 - Node.js >= 18
 - npm
 
-### 1 Clonar o repositório e acessar o local
+### 1 Clonar o repositório e instalar dependências
 
 ```bash
 git clone https://github.com/anselmosz/homelab-monitor-api
 
 cd homelab-monitor-api
+
+npm install
 ```
 
 ### 2 Configurar variáveis de ambiente
