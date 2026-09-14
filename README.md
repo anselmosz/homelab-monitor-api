@@ -131,14 +131,14 @@ Responsável por:
 
 ---
 
-### Como executar o projeto
+## Como executar o projeto
 
 Para executar este projeto é necessário que seu PC tenha os seguintes recursos:
 
 - Node.js >= 18
 - npm
 
-#### 1 Clonar o repositório e acessar o local
+### 1 Clonar o repositório e acessar o local
 
 ```bash
 git clone https://github.com/anselmosz/homelab-monitor-api
@@ -146,7 +146,7 @@ git clone https://github.com/anselmosz/homelab-monitor-api
 cd homelab-monitor-api
 ```
 
-#### 2 Configurar variáveis de ambiente
+### 2 Configurar variáveis de ambiente
 
 Antes de executar o projeto, configure um arquivo `.env.development`.
 
