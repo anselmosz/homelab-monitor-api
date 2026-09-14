@@ -123,11 +123,17 @@ Responsável por:
 
 ### System
 
-| Método | Endpoint        | Descrição                                               |
-| ------ | --------------- | ------------------------------------------------------- |
-| GET    | /system/memory  | Realizar a leitura de dados sobre uso de RAM do homelab |
-| GET    | /system/storage | coletar dados sobre uso do armazenamento do homelab     |
-| GET    | /system/uptime  | Retornar a quanto tempo o dispositivo está em execução  |
+| Método | Endpoint        | Descrição                                              |
+| ------ | --------------- | ------------------------------------------------------ |
+| GET    | /system/memory  | Realiza a leitura de dados sobre uso de RAM do homelab |
+| GET    | /system/storage | coleta dados sobre uso do armazenamento do homelab     |
+| GET    | /system/uptime  | Retorna a quanto tempo o dispositivo está em execução  |
+
+### Services
+
+| Método | Endpoint        | Descrição                                    |
+| ------ | --------------- | -------------------------------------------- |
+| GET    | /services/ssh   | Retorna o status de atividade do serviço SSH |
 
 ---
 
