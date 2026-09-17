@@ -79,8 +79,8 @@ src
  ├ middlewares
  ├ modules
  │   ├ system
- │   ├ services (será implementado)
- │   └ network (será implementado)
+ │   ├ services
+ │   └ network
  └ utils 
 ```
 
@@ -143,6 +143,14 @@ Responsável por:
 | Método | Endpoint        | Descrição                                    |
 | ------ | --------------- | -------------------------------------------- |
 | GET    | /services/ssh   | Retorna o status de atividade do serviço SSH |
+
+### network
+
+| Método | Endpoint            | Descrição                                |
+| ------ | ------------------- | ---------------------------------------- |
+| GET    | /network/connection | Retorna o status da conexão com internet |
+| GET    | /network/localip    | Retorna o IP local do dispositivo        |
+
 
 ---
 
