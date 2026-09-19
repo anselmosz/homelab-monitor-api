@@ -28,7 +28,7 @@ function formatLocalIP(interfaces) {
 
 async function checkConnectiviy() {
   try {
-    await dns.lookup('duckdns.org');
+    await dns.lookup('cloudflare.com');
     return true;
   } catch (error) {
     return false;
