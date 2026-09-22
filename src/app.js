@@ -16,3 +16,9 @@ app.use("/network", networkRoute);
 app.use("/deploy", deployRouter);
 
 export default app;
+
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  },
+}));
