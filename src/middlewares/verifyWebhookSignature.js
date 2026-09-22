@@ -13,7 +13,7 @@ export function verifyWebhookSignature(req, res, next) {
   const receivedBuffer = Buffer.from(signatureHeader);
   const expectedBuffer = Buffer.from(expectedSignature);
 
-  const isValid = receivedBuffer.length === expectedBuffer.length && crypto.timingSafeEqual(receivedBuffer. expectedBuffer);
+  const isValid = receivedBuffer.length === expectedBuffer.length && crypto.timingSafeEqual(receivedBuffer, expectedBuffer);
 
   if (!isValid) {
     return res.status(401).json({ error: 'Assinatura inválida' });
