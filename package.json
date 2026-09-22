@@ -8,7 +8,12 @@
   "main": "server.js",
   "scripts": {
     "start": "NODE_ENV=production node server.js",
-    "dev": "NODE_ENV=development node --watch server.js"
+    "dev": "NODE_ENV=development node --watch server.js",
+    "pm2:start": "npx pm2 start ecosystem.config.cjs",
+    "pm2:start:prod": "npx pm2 start ecosystem.config.cjs --env production",
+    "pm2:restart": "npx pm2 restart homalab-monitor-api",
+    "pm2:stop": "npx pm2 stop homelab-monitor-api",
+    "pm2:logs": "npx pm2 logs homelab-monitor-api"
   },
   "engines": {
     "node": ">=18.0.0"
@@ -19,6 +24,8 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "pm2": "^7.0.4"
+  },
   "private": true
 }

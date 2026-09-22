@@ -2,3 +2,6 @@
 .env
 .env.production
 .env.development
+.pm2/
+*.pm2.log
+deploy.log
