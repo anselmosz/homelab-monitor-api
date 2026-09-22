@@ -10,10 +10,14 @@ export function verifyWebhookSignature(req, res, next) {
 
   const expectedSignature = 'sha256=' + crypto.createHmac('sha256', config.webhookSecret).update(req.rawBody).digest('hex');
 
-  const receivedBuffer = Buffer.from(signatureHeader);
-  const expectedBuffer = Buffer.from(expectedSignature);
+  const receivedBuffer = Buffer.from(signatureHeader, 'utf8');
+  const expectedBuffer = Buffer.from(expectedSignature, 'utf8');
 
-  const isValid = receivedBuffer.length === expectedBuffer.length && crypto.timingSafeEqual(receivedBuffer, expectedBuffer);
+  if (receivedBuffer.length !== expectedBuffer.length) {
+    return res.status(401).json({ error: 'Assinatura inválida' });
+  }
+  
+  const isValid = crypto.timingSafeEqual(receivedBuffer, expectedBuffer);
 
   if (!isValid) {
     return res.status(401).json({ error: 'Assinatura inválida' });
