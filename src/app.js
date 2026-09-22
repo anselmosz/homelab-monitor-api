@@ -10,15 +10,15 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use(express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  },
+}));
+
 app.use("/system", systemRoutes);
 app.use("/services", servicesStatusRoute);
 app.use("/network", networkRoute);
 app.use("/deploy", deployRouter);
 
 export default app;
-
-app.use(express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  },
-}));
